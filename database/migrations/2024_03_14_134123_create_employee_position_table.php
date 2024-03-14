@@ -13,7 +13,7 @@ class CreateEmployeePositionTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_position', function (Blueprint $table) {
+        Schema::create('employee_positions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('position_id');
             $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
@@ -31,6 +31,6 @@ class CreateEmployeePositionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_position');
+        Schema::dropIfExists('employee_positions');
     }
 }
