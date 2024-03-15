@@ -33,6 +33,13 @@ Route::controller(EmployeeController::class)
         Route::post('/', 'create')->name('employee.create');
         Route::put('/', 'updateEvaluation')->name('employee.update');
         Route::get('/', 'getEmployees')->name('get.employee');
+        Route::get('/top-performers', 'topPerformers')->name('get.top_performers');
+        Route::get('/get-all', 'getAll')->name('get.all_employees');
+        Route::get('/by-units', 'getAllByUnit')->name('get.by_units');
+
+        Route::get('/export-excel', 'exportEmployeesNotes')->name('export_employees_note.excel');
+        Route::get('/export-excel/all-employees', 'exportAllEmployees')->name('export_all_employees.excel');
+        Route::get('/export-pdf', 'export')->name('export.pdf');
     });
 
 Route::controller(PositionController::class)
@@ -41,14 +48,22 @@ Route::controller(PositionController::class)
         Route::get('/', 'getPositions')->name('get.positions');
     });
 
-// Unidades
 Route::get('/units/create', function () {
     return view('units.create');
 })->name('unit.index');
-// Colaboradores
+
 Route::get('/employee/create', function () {
     return view('employees.create');
 })->name('employee.index');
+
 Route::get('/employee/evaluation', function () {
     return view('employees.evaluation');
 })->name('employee.evaluation');
+
+Route::get('/employee/allEmployeesReport', function () {
+    return view('employees.allEmployeesReport');
+})->name('employee.allEmployeesReport');
+
+Route::get('/employee/byNotesReport', function () {
+    return view('employees.byNotesReport');
+})->name('employee.byNotesReport');
