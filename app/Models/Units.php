@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Units extends Model
 {
-
-    public function createUnit(array $data):bool
-    {
-        $unit = $this->save($data);
-        return $unit ? true : false;
-    }
-
     use HasFactory;
 
     protected $fillable = [
@@ -21,4 +14,15 @@ class Units extends Model
         'company_name',
         'cnpj'
     ];
+
+    public function createUnit(array $data):bool
+    {
+        $unit = $this->save($data);
+        return $unit ? true : false;
+    }
+
+    public function employees()
+    {
+        return $this->hasMany(Employees::class);
+    }
 }
