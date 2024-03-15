@@ -2,7 +2,6 @@
 
 @section('content')
     <h2>Performance de colaboradores</h2>
-    <!-- Formulário de cadastro para Colaboradores -->
     <form method="POST" action="{{ route('employee.update') }}">
         @csrf
         @method('PUT')
@@ -22,6 +21,24 @@
     </form>
 @endsection
 
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -30,6 +47,7 @@
                 console.log('ID do funcionário:', $(this).val());
             });
         });
+        
         $.get('{{ route('get.employee') }}', function(data) {
             var options = '';
             $.each(data, function(index, employee) {
@@ -37,6 +55,12 @@
                     '</option>';
             });
             $('#employee').html(options);
+        });
+
+        $(document).ready(function(){
+            $(".alert").delay(5000).slideUp(200, function() {
+                $(this).alert('close');
+            });
         });
     </script>
 @endpush
