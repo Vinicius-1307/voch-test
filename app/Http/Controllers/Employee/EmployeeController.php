@@ -62,7 +62,7 @@ class EmployeeController extends Controller
                 'Cargo' => $employeePosition->position->position,
             ];
         });
-        return view('reports.allEmployees')->with('employees', $formattedEmployees);
+        return view('tables.allEmployees')->with('employees', $formattedEmployees);
     }
 
     public function getAllByUnit()
@@ -98,6 +98,6 @@ class EmployeeController extends Controller
 
     public function exportAllEmployees()
     {
-        return Excel::download(new AllEmployeesExport, 'relatorio_de_desempenho.xlsx');
+        return Excel::download(new AllEmployeesExport, 'relatorio_de_colaboradores.xlsx');
     }
 }

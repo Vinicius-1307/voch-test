@@ -22,8 +22,7 @@ class AllEmployeesExport implements FromCollection, WithHeadings
                 'CPF' => $employeePosition->employee->cpf,
                 'Email' => $employeePosition->employee->email,
                 'Unidade' => $employeePosition->employee->unit->fantasy_name,
-                'Cargo' => $employeePosition->position->position,
-                'Nota de Desempenho' => $employeePosition->performance_note,
+                'Cargo' => $employeePosition->position->position
             ];
         });
 
@@ -40,8 +39,7 @@ class AllEmployeesExport implements FromCollection, WithHeadings
             'CPF',
             'Email',
             'Unidade',
-            'Cargo',
-            'Nota de Desempenho',
+            'Cargo'
         ];
     }
 }
