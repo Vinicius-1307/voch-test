@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePerformanceRequest extends FormRequest
+class GetByUnitRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,16 +26,11 @@ class UpdatePerformanceRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => [
+            'unit_id' => [
                 'integer',
                 'required',
-                'exists:employees,id'
-            ],
-            'performance_note' => [
-                'numeric',
-                'required',
-                'between:0,10'
-            ],
+                'exists:units,id'
+            ]
         ];
     }
 
