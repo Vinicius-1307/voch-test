@@ -19,7 +19,7 @@ class CreateEmployeePositionTable extends Migration
             $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
             $table->unsignedBigInteger('employee_id');
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
-            $table->unsignedBigInteger('performance_note');
+            $table->unsignedBigInteger('performance_note')->default(0);
             $table->timestamps();
         });
     }
