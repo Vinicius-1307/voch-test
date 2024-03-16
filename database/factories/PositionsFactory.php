@@ -14,7 +14,7 @@ class PositionsFactory extends Factory
     public function definition()
     {
         return [
-            'position' => $this->faker->unique()->name()
+            'position' => $this->faker->unique()->jobTitle()
         ];
     }
 }
