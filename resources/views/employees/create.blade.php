@@ -2,9 +2,25 @@
 
 @section('content')
     <h2>Cadastro de Colaboradores</h2>
-    <!-- Formulário de cadastro para Colaboradores -->
     <form method="POST" action="{{ route('employee.create') }}">
         @csrf
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="form-group">
             <label for="name">Nome do Colaborador:</label>
             <input type="text" class="form-control" id="name" name="name" required>

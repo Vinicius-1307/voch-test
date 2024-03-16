@@ -5,6 +5,23 @@
     <form method="POST" action="{{ route('employee.update') }}">
         @csrf
         @method('PUT')
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="form-group">
             <label for="employee">Colaborador:</label>
             <select class="form-control" id="employee" name="employee" required>
@@ -20,24 +37,6 @@
         <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
 @endsection
-
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
-
-@if(session('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{ session('error') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
 
 @push('scripts')
     <script>
@@ -56,7 +55,7 @@
             $('#employee').html(options);
         });
 
-        $(document).ready(function(){
+        $(document).ready(function() {
             $(".alert").delay(5000).slideUp(200, function() {
                 $(this).alert('close');
             });
