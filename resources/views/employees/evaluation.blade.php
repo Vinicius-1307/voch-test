@@ -44,10 +44,9 @@
         $(document).ready(function() {
             $('#employee').change(function() {
                 $('#employeeId').val($(this).val());
-                console.log('ID do funcionário:', $(this).val());
             });
         });
-        
+
         $.get('{{ route('get.employee') }}', function(data) {
             var options = '';
             $.each(data, function(index, employee) {

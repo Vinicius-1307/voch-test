@@ -14,7 +14,6 @@
     <script>
         $(document).ready(function() {
             $.get('{{ route('get.by_units') }}', function(data) {
-                console.log(data)
                 $('#reportContent').html(data);
             });
         });
