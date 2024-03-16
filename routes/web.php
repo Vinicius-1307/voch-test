@@ -37,8 +37,9 @@ Route::controller(EmployeeController::class)
         Route::get('/get-all', 'getAll')->name('get.all_employees');
         Route::get('/by-units', 'getAllByUnit')->name('get.by_units');
 
-        Route::get('/export-excel', 'exportEmployeesNotes')->name('export_employees_note.excel');
+        Route::get('/export-excel/by-performance', 'exportEmployeesNotes')->name('export_employees_note.excel');
         Route::get('/export-excel/all-employees', 'exportAllEmployees')->name('export_all_employees.excel');
+        Route::get('/export-excel/by-units', 'exportUnitsWithEmployees')->name('export_by_units.excel');
         Route::get('/export-pdf', 'export')->name('export.pdf');
     });
 
@@ -67,3 +68,7 @@ Route::get('/employee/allEmployeesReport', function () {
 Route::get('/employee/byNotesReport', function () {
     return view('employees.byNotesReport');
 })->name('employee.byNotesReport');
+
+Route::get('/employee/byUnitsReport', function () {
+    return view('employees.byUnitsReport');
+})->name('employee.byUnitsReport');
