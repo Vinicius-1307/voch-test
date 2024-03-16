@@ -8,119 +8,192 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
     <style>
-        .sidebar {
-            height: 100vh;
-            width: 200px;
-            position: absolute;
-            z-index: 1;
-            top: 0;
-            left: -200px;
-            background-color: #f8f9fa;
-            overflow-x: hidden;
-            padding-top: 20px;
-            transition: left 0.3s;
-            margin-right: 40px;
+        .active {
+            display: flex !important;
         }
 
-        .sidebar.active {
-            left: 0;
+        .hide {
+            display: none !important;
+        }
+
+        .sidebar_active {
+            width: 250px;
+            transition: all 0.3s ease-in-out;
+            animation: scroll_sidebar 0.3s ease-in-out forwards;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            height: 100vh;
+            padding: 16px 6px;
+            top: 0;
+            gap: 16px;
+            border-radius: 0 20px 20px 0;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+            transition: all 0.3s ease-in-out;
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn_sidebar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sidebar_active .btn_sidebar {
+            justify-content: flex-end;
+            padding-right: 16px;
         }
 
         #sidebarToggleBtn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
+            all: unset;
             cursor: pointer;
-            color: #333;
         }
 
-        #sidebarCloseBtn {
-            display: none;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            color: #333;
-        }
-
-        .sidebar.active #sidebarCloseBtn {
-            display: block;
-        }
-
-        .sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #333;
-            display: block;
-        }
-
-        .sidebar a:hover {
+        #sidebarToggleBtn i {
+            font-size: 24px;
             color: #007bff;
         }
 
+        .action_sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .action_sidebar a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: #141415;
+            text-decoration: none;
+            transition: all 0.25s ease-in-out;
+        }
+
+        .action_sidebar a i {
+            font-size: 24px;
+            color: #007bff;
+        }
+
+        .action_sidebar a span {
+            display: none;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .sidebar_active .action_sidebar a span {
+            display: flex;
+        }
+
+        .sidebar_active .action_sidebar a {
+            justify-content: flex-start;
+        }
+
+        .action_sidebar a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .action_sidebar a:hover i {
+            color: #f8f9fc;
+        }
+
         .main-content {
-            width: 90%;
-            margin-left: 40px;
-            padding: 20px;
-            transition: margin-left 0.3s;
+            padding: 16px 100px;
         }
 
-        .main-content.active {
-            margin-left: 200px;
+        .main_content_active {
+            padding-left: 280px;
+            transition: all 0.3s ease-in-out;
         }
 
-        .btn-group {
-            margin-bottom: 20px;
+
+        @keyframes scroll_sidebar {
+            0% {
+                transform: translateX(-80%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
         }
 
-        @media screen and (max-width: 768px) {
+        @media (max-width: 768px) {
+
             .main-content {
-                width: 100%;
-                margin-top: 20px;
+                padding: 64px 16px;
+            }
+
+            .main_content_active {
+                padding-left: 16px;
+            }
+
+            .sidebar {
+                height: auto;
+                padding: 16px;
+                border-radius: 12px;
+            }
+
+            #sidebarToggleBtn i {
+                font-size: 28px;
+            }
+
+            .action_sidebar {
+                display: none;
+            }
+
+            .sidebar_active .action_sidebar {
+                display: flex;
             }
 
             #reportContent {
                 overflow-x: scroll;
-            }
-
-            .sidebar {
-                width: 100%;
-                left: -100%;
-            }
-
-            .sidebar.active {
-                left: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .main-content.active {
-                margin-left: 0;
-            }
-
-            .btn-group {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
             }
         }
     </style>
 </head>
 
 <body>
-    <button id="sidebarToggleBtn"><i class="fas fa-bars"></i></button>
 
     <div class="sidebar">
-        <button id="sidebarCloseBtn"><i class="fas fa-times"></i></button>
-        <a href="{{ route('unit.index') }}"><i class="fas fa-building"></i> Unidades</a>
-        <a href="{{ route('employee.index') }}"><i class="fa-solid fa-user"></i> Colaboradores</a>
-        <a href="{{ route('employee.evaluation') }}"><i class="fa-solid fa-user-check"></i> Desempenho</a>
-        <a href="{{ route('employee.allEmployeesReport') }}"><i class="fa-solid fa-file"></i> Relatório de Colaboradores</a>
-        <a href="{{ route('employee.byNotesReport') }}"><i class="fa-solid fa-file"></i> Relatório por Desempenho</a>
-        <a href="{{ route('employee.byUnitsReport') }}"><i class="fa-solid fa-file"></i> Relatório por Unidades</a>
+        <div class="btn_sidebar">
+            <button id="sidebarToggleBtn">
+                <i id="icon_btn" class="fa-solid fa-caret-right"></i>
+            </button>
+        </div>
+        <div class="action_sidebar">
+            <a href="{{ route('unit.index') }}">
+                <i class="fas fa-building"></i>
+                <span>Unidades</span>
+            </a>
+            <a href="{{ route('employee.index') }}">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Colaboradores</span>
+            </a>
+            <a href="{{ route('employee.evaluation') }}">
+                <i class="fa-solid fa-user-check"></i>
+                <span>Desempenho</span>
+            </a>
+            <a href="{{ route('employee.allEmployeesReport') }}">
+                <i class="fa-solid fa-users"></i>
+                <span>Relatório de Colaboradores</span>
+            </a>
+            <a href="{{ route('employee.byNotesReport') }}">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                <span>Relatório por Desempenho</span>
+            </a>
+            <a href="{{ route('employee.byUnitsReport') }}">
+                <i class="fa-solid fa-file"></i>
+                <span>Relatório por Unidades</span>
+            </a>
+        </div>
     </div>
 
     <div class="main-content">
@@ -134,13 +207,9 @@
     <script>
         $(document).ready(function() {
             $('#sidebarToggleBtn').click(function() {
-                $('.sidebar').toggleClass('active');
-                $('.main-content').toggleClass('active');
-            });
-
-            $('#sidebarCloseBtn').click(function() {
-                $('.sidebar').removeClass('active');
-                $('.main-content').removeClass('active');
+                $('#icon_btn').toggleClass('fa-caret-right fa-times');
+                $('.sidebar').toggleClass('sidebar_active');
+                $('.main-content').toggleClass('main_content_active');
             });
         });
     </script>
