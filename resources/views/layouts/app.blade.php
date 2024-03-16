@@ -120,7 +120,7 @@
         <a href="{{ route('employee.evaluation') }}"><i class="fa-solid fa-user-check"></i> Desempenho</a>
         <a href="{{ route('employee.allEmployeesReport') }}"><i class="fa-solid fa-file"></i> Relatório de Colaboradores</a>
         <a href="{{ route('employee.byNotesReport') }}"><i class="fa-solid fa-file"></i> Relatório por Desempenho</a>
-        {{-- <a href="{{ route('employee.allEmployeesReport') }}"><i class="fa-solid fa-file"></i> Relatório por Desempenho</a> --}}
+        <a href="{{ route('employee.byUnitsReport') }}"><i class="fa-solid fa-file"></i> Relatório por Unidades</a>
     </div>
 
     <div class="main-content">
