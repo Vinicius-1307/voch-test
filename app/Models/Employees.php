@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Employees extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'unit_id',
+        'units_id',
         'name',
         'cpf',
         'email'
@@ -18,7 +17,7 @@ class Employees extends Model
 
     public function createEmployee(array $data): bool
     {
-        $this->unit_id = $data['unit_id'];
+        $this->units_id = $data['units_id'];
         $this->name = $data['name'];
         $this->cpf = $data['cpf'];
         $this->email = $data['email'];
@@ -45,7 +44,7 @@ class Employees extends Model
     }
 
     public function unit()
-{
-    return $this->belongsTo(Units::class, 'unit_id');
-}
+    {
+        return $this->belongsTo(Units::class, 'units_id');
+    }
 }

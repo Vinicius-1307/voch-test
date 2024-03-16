@@ -18,7 +18,7 @@ class EmployeesFactory extends Factory
         $unitId = Units::pluck('id')->random();
 
         return [
-            'unit_id' => $unitId,
+            'units_id' => $unitId,
             'name' => $this->faker->name(),
             'cpf' =>  function () {
                 return $this->generateCpf();

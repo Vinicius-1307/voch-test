@@ -26,7 +26,7 @@ class CreateEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'unit_id' => [
+            'units_id' => [
                 'integer',
                 'required',
                 'exists:units,id'
