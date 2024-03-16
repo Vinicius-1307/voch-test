@@ -29,7 +29,7 @@
             <select class="form-control" id="unit" name="unit" required>
                 <option value="">Selecione a Unidade</option>
             </select>
-            <input type="hidden" id="unitId" name="unit_id">
+            <input type="hidden" id="unitId" name="units_id">
         </div>
         <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
