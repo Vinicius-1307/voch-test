@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employee;
 
 use App\Exports\AllEmployeesExport;
 use App\Exports\EmployeeNotesExport;
+use App\Exports\UnitsWithEmployeesExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\CreateEmployeeRequest;
 use App\Http\Requests\Employee\GetByUnitRequest;
@@ -13,6 +14,7 @@ use App\Models\Employees;
 use App\Models\Units;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
@@ -24,7 +26,6 @@ class EmployeeController extends Controller
     public function create(CreateEmployeeRequest $request)
     {
         $data = $request->validated();
-        dd($data);
         $data['cpf'] = preg_replace('/\D/', '', $data['cpf']);
         if ($this->employees->createEmployee($data))
             return back()->with('success', 'Colaborador criado com sucesso!');
@@ -52,7 +53,7 @@ class EmployeeController extends Controller
     public function getAll()
     {
         $employees = EmployeePosition::with(['employee.unit', 'position'])
-        ->get();
+            ->get();
         $formattedEmployees = $employees->map(function ($employeePosition) {
             return [
                 'Nome' => $employeePosition->employee->name,
@@ -68,7 +69,7 @@ class EmployeeController extends Controller
     public function getAllByUnit()
     {
         $units = Units::withCount('employees')->get();
-        return view('reports.byUnit', compact('units'));
+        return view('tables.byUnit', compact('units'));
     }
 
     public function topPerformers()
@@ -91,6 +92,7 @@ class EmployeeController extends Controller
         return view('tables.topPerformers')->with('employees', $formattedTopPerformers);
     }
 
+    //Functions to generate Excel
     public function exportEmployeesNotes()
     {
         return Excel::download(new EmployeeNotesExport, 'relatorio_de_desempenho.xlsx');
@@ -99,5 +101,10 @@ class EmployeeController extends Controller
     public function exportAllEmployees()
     {
         return Excel::download(new AllEmployeesExport, 'relatorio_de_colaboradores.xlsx');
+    }
+
+    public function exportUnitsWithEmployees()
+    {
+        return Excel::download(new UnitsWithEmployeesExport, 'relatorio_de_unidades.xlsx');
     }
 }
