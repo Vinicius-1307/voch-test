@@ -17,6 +17,13 @@ class Employee extends Model
 
     public function createEmployee(array $data): bool
     {
+        $existingEmployee = $this->where('email', $data['email'])
+            ->orWhere('cpf', $data['cpf'])
+            ->first();
+
+        if ($existingEmployee) {
+            return false;
+        }
         $this->units_id = $data['units_id'];
         $this->name = $data['name'];
         $this->cpf = $data['cpf'];
