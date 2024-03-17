@@ -4,7 +4,7 @@
     <h2>Relatórios de Unidades</h2>
 
     <div class="btn-group" role="group" aria-label="Relatórios">
-        <a href="{{ route('export_by_units.excel') }}" class="btn btn-success mx-2 rounded">Exportar para Excel</a>
+        <a href="{{ route('export_by_units.excel') }}" class="btn btn-success mx-2 rounded mb-2">Exportar para Excel</a>
     </div>
 
     <div id="reportContent"></div>
