@@ -7,19 +7,15 @@ use App\Exports\EmployeeNotesExport;
 use App\Exports\UnitsWithEmployeesExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\CreateEmployeeRequest;
-use App\Http\Requests\Employee\GetByUnitRequest;
 use App\Http\Requests\Employee\UpdatePerformanceRequest;
+use App\Models\Employee;
 use App\Models\EmployeePosition;
-use App\Models\Employees;
 use App\Models\Units;
-use Barryvdh\DomPDF\PDF;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
-    public function __construct(protected Employees $employees)
+    public function __construct(protected Employee $employee)
     {
     }
 
@@ -27,7 +23,7 @@ class EmployeeController extends Controller
     {
         $data = $request->validated();
         $data['cpf'] = preg_replace('/\D/', '', $data['cpf']);
-        if ($this->employees->createEmployee($data))
+        if ($this->employee->createEmployee($data))
             return back()->with('success', 'Colaborador criado com sucesso!');
         else
             return back()->with('error', 'Erro ao criar o colaborador!');
@@ -37,16 +33,16 @@ class EmployeeController extends Controller
     {
         $data = $request->validated();
         $employeeId = $data['employee_id'];
-        $employee = Employees::find($employeeId);
+        $employee = $this->employee->find($employeeId);
         if (!$employee)
             return back()->with('error', 'Colaborador não encontrado!');
-        $this->employees->updatePerformance($request->validated());
+        $this->employee->updatePerformance($request->validated());
         return back()->with('success', 'Desempenho do colaborador atualizado com sucesso!');
     }
 
     public function getEmployees()
     {
-        $employees = Employees::select('id', 'name')->get();
+        $employees = Employee::select('id', 'name')->get();
         return response()->json($employees);
     }
 
