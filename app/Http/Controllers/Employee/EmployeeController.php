@@ -11,6 +11,7 @@ use App\Http\Requests\Employee\UpdatePerformanceRequest;
 use App\Models\Employee;
 use App\Models\EmployeePosition;
 use App\Models\Unit;
+use Exception;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
@@ -21,71 +22,95 @@ class EmployeeController extends Controller
 
     public function create(CreateEmployeeRequest $request)
     {
-        $data = $request->validated();
-        $data['cpf'] = preg_replace('/\D/', '', $data['cpf']);
-        if ($this->employee->createEmployee($data))
-            return back()->with('success', 'Colaborador criado com sucesso!');
-        else
-            return back()->with('error', 'Erro ao criar o colaborador!');
+        try {
+            $data = $request->validated();
+            $data['cpf'] = preg_replace('/\D/', '', $data['cpf']);
+            if ($this->employee->createEmployee($data))
+                return back()->with('success', 'Colaborador criado com sucesso!');
+            else
+                return back()->with('error', 'Erro ao criar o colaborador!');
+        } catch (Exception $err) {
+            return response()->json($err->getMessage(), 500);
+        }
     }
 
     public function updateEvaluation(UpdatePerformanceRequest $request)
     {
-        $data = $request->validated();
-        $employeeId = $data['employee_id'];
-        $employee = $this->employee->find($employeeId);
-        if (!$employee)
-            return back()->with('error', 'Colaborador não encontrado!');
-        $this->employee->updatePerformance($request->validated());
-        return back()->with('success', 'Desempenho do colaborador atualizado com sucesso!');
+        try {
+            $data = $request->validated();
+            $employeeId = $data['employee_id'];
+            $employee = $this->employee->find($employeeId);
+            if (!$employee)
+                return back()->with('error', 'Colaborador não encontrado!');
+            $this->employee->updatePerformance($request->validated());
+            return back()->with('success', 'Desempenho do colaborador atualizado com sucesso!');
+        } catch (Exception $err) {
+            return response()->json($err->getMessage(), 500);
+        }
     }
 
     public function getEmployees()
     {
-        $employees = Employee::select('id', 'name')->get();
-        return response()->json($employees);
+        try {
+            $employees = $this->employee->select('id', 'name')->get();
+            return response()->json($employees);
+        } catch (Exception $err) {
+            return response()->json($err->getMessage(), 500);
+        }
     }
 
     public function getAll()
     {
-        $employees = EmployeePosition::with(['employee.unit', 'position'])
-            ->get();
-        $formattedEmployees = $employees->map(function ($employeePosition) {
-            return [
-                'Nome' => $employeePosition->employee->name,
-                'CPF' => $employeePosition->employee->cpf,
-                'Email' => $employeePosition->employee->email,
-                'Unidade' => $employeePosition->employee->unit->fantasy_name,
-                'Cargo' => $employeePosition->position->position,
-            ];
-        });
-        return view('tables.allEmployees')->with('employees', $formattedEmployees);
+        try {
+            $employees = EmployeePosition::with(['employee.unit', 'position'])
+                ->get();
+            $formattedEmployees = $employees->map(function ($employeePosition) {
+                return [
+                    'Nome' => $employeePosition->employee->name,
+                    'CPF' => $employeePosition->employee->cpf,
+                    'Email' => $employeePosition->employee->email,
+                    'Unidade' => $employeePosition->employee->unit->fantasy_name,
+                    'Cargo' => $employeePosition->position->position,
+                ];
+            });
+            return view('tables.allEmployees')->with('employees', $formattedEmployees);
+        } catch (Exception $err) {
+            return response()->json($err->getMessage(), 500);
+        }
     }
 
     public function getAllByUnit()
     {
-        $units = Unit::withCount('employees')->get();
-        return view('tables.byUnit', compact('units'));
+        try {
+            $units = Unit::withCount('employees')->get();
+            return view('tables.byUnit', compact('units'));
+        } catch (Exception $err) {
+            return response()->json($err->getMessage(), 500);
+        }
     }
 
     public function topPerformers()
     {
-        $topPerformers = EmployeePosition::orderBy('performance_note', 'desc')
-            ->with(['employee.unit', 'position'])
-            ->get();
+        try {
+            $topPerformers = EmployeePosition::orderBy('performance_note', 'desc')
+                ->with(['employee.unit', 'position'])
+                ->get();
 
-        $formattedTopPerformers = $topPerformers->map(function ($employeePosition) {
-            return [
-                'Nome' => $employeePosition->employee->name,
-                'CPF' => $employeePosition->employee->cpf,
-                'Email' => $employeePosition->employee->email,
-                'Unidade' => $employeePosition->employee->unit->fantasy_name,
-                'Cargo' => $employeePosition->position->position,
-                'Nota de Desempenho' => $employeePosition->performance_note,
-            ];
-        });
+            $formattedTopPerformers = $topPerformers->map(function ($employeePosition) {
+                return [
+                    'Nome' => $employeePosition->employee->name,
+                    'CPF' => $employeePosition->employee->cpf,
+                    'Email' => $employeePosition->employee->email,
+                    'Unidade' => $employeePosition->employee->unit->fantasy_name,
+                    'Cargo' => $employeePosition->position->position,
+                    'Nota de Desempenho' => $employeePosition->performance_note,
+                ];
+            });
 
-        return view('tables.topPerformers')->with('employees', $formattedTopPerformers);
+            return view('tables.topPerformers')->with('employees', $formattedTopPerformers);
+        } catch (Exception $err) {
+            return response()->json($err->getMessage(), 500);
+        }
     }
 
     //Functions to generate Excel
