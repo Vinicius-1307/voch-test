@@ -16,7 +16,7 @@ class UnitController extends Controller
     public function create(CreateUnitRequest $request)
     {
         try {
-            $data = $request->all();
+            $data = $request->validated();
             $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
             if ($this->unit->createUnit($data))
                 return back()->with('success', 'Unidade criada com sucesso!');
