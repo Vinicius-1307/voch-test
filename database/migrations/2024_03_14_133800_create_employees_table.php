@@ -15,11 +15,10 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('units_id');
-            $table->foreign('units_id')->references('id')->on('units')->onDelete('cascade');
+            $table->foreignId('units_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->unsignedBigInteger('cpf')->unique();
-            $table->string('email');
+            $table->string('cpf', 11)->unique();
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }
