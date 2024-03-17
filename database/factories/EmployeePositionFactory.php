@@ -2,8 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Employees;
-use App\Models\Positions;
+use App\Models\Position;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EmployeePositionFactory extends Factory
@@ -16,7 +15,7 @@ class EmployeePositionFactory extends Factory
     public function definition()
     {
         return [
-            'position_id' => Positions::pluck('id')->random(),
+            'position_id' => Position::pluck('id')->random(),
             'performance_note' => $this->faker->numberBetween(0, 10),
         ];
     }
