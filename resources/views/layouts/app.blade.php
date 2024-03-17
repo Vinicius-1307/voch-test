@@ -165,7 +165,7 @@
     <div class="sidebar">
         <div class="btn_sidebar">
             <button id="sidebarToggleBtn">
-                <i id="icon_btn" class="fa-solid fa-caret-right"></i>
+                <i id="icon_btn" class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
         <div class="action_sidebar">
