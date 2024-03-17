@@ -63,17 +63,19 @@ class EmployeeController extends Controller
     {
         try {
             $employees = EmployeePosition::with(['employee.unit', 'position'])
-                ->get();
-            $formattedEmployees = $employees->map(function ($employeePosition) {
-                return [
-                    'Nome' => $employeePosition->employee->name,
-                    'CPF' => $employeePosition->employee->cpf,
-                    'Email' => $employeePosition->employee->email,
-                    'Unidade' => $employeePosition->employee->unit->fantasy_name,
-                    'Cargo' => $employeePosition->position->position,
-                ];
-            });
-            return view('tables.allEmployees')->with('employees', $formattedEmployees);
+                ->join('employees', 'employees.id', '=', 'employee_positions.employee_id')
+                ->orderBy('employees.name')
+                ->get()
+                ->map(function ($employeePosition) {
+                    return [
+                        'Nome' => $employeePosition->employee->name,
+                        'CPF' => $employeePosition->employee->cpf,
+                        'Email' => $employeePosition->employee->email,
+                        'Unidade' => $employeePosition->employee->unit->fantasy_name,
+                        'Cargo' => $employeePosition->position->position,
+                    ];
+                });
+            return view('tables.allEmployees')->with('employees', $employees);
         } catch (Exception $err) {
             return response()->json($err->getMessage(), 500);
         }

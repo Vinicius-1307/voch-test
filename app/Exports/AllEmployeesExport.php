@@ -10,11 +10,14 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 class AllEmployeesExport implements FromCollection, WithHeadings
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
-        $employees = EmployeePosition::with(['employee.unit', 'position'])->get();
+        $employees = EmployeePosition::with(['employee.unit', 'position'])
+            ->join('employees', 'employees.id', '=', 'employee_positions.employee_id')
+            ->orderBy('employees.name')
+            ->get();
 
         $formattedData = $employees->map(function ($employeePosition) {
             return [
@@ -29,7 +32,7 @@ class AllEmployeesExport implements FromCollection, WithHeadings
         return new Collection($formattedData->values());
     }
 
-     /**
+    /**
      * @return array
      */
     public function headings(): array
