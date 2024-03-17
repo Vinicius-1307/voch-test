@@ -14,7 +14,7 @@ class EmployeeNotesExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        $employees = EmployeePosition::with(['employee.unit', 'position'])->get();
+        $employees = EmployeePosition::with(['employee.unit', 'position'])->orderBy('performance_note', 'desc')->get();
 
         $formattedData = $employees->map(function ($employeePosition) {
             return [
