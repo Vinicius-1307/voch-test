@@ -17,7 +17,7 @@ class CreateEmployeesTable extends Migration
             $table->id();
             $table->foreignId('units_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('cpf', 11)->unique();
+            $table->string('cpf', 14)->unique();
             $table->string('email')->unique();
             $table->timestamps();
         });

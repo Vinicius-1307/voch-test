@@ -17,7 +17,7 @@ class CreateUnitsTable extends Migration
             $table->id();
             $table->string('fantasy_name');
             $table->string('company_name');
-            $table->string('cnpj', 14)->unique();
+            $table->string('cnpj', 18)->unique();
             $table->timestamps();
         });
     }

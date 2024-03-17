@@ -24,7 +24,6 @@ class EmployeeController extends Controller
     {
         try {
             $data = $request->validated();
-            $data['cpf'] = preg_replace('/\D/', '', $data['cpf']);
             if ($this->employee->createEmployee($data))
                 return back()->with('success', 'Colaborador criado com sucesso!');
             else

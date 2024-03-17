@@ -6,7 +6,7 @@ use App\Models\EmployeePosition;
 use App\Models\Unit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class EmployeesFactory extends Factory
+class EmployeeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -35,9 +35,10 @@ class EmployeesFactory extends Factory
     private function generateCpf()
     {
         $cpf = '';
-        for ($i = 0; $i < 11; $i++) {
+        for ($i = 0; $i < 9; $i++) {
             $cpf .= mt_rand(0, 9);
         }
+        $cpf = substr($cpf, 0, 3) . '.' . substr($cpf, 3, 3) . '.' . substr($cpf, 6, 3) . '-' . mt_rand(0, 9) . mt_rand(0, 9);
         return $cpf;
     }
 

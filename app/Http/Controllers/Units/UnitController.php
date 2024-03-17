@@ -17,7 +17,6 @@ class UnitController extends Controller
     {
         try {
             $data = $request->validated();
-            $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
             if ($this->unit->createUnit($data))
                 return back()->with('success', 'Unidade criada com sucesso!');
             else
