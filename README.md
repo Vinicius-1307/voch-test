@@ -2,6 +2,10 @@
 
 Bem-vindo. Esse sistema foi feito para fim de avaliação a pedido da empresa Voch Tech.
 
+**Requisitos:**
+
+```PHP 8.0 ou superior```
+
 **Configuração:**
 
 Antes de começar a usar o sistema, siga as etapas a seguir para configurar o ambiente:
