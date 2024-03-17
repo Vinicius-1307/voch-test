@@ -47,7 +47,7 @@
         });
 
         $.get('{{ route('get.employee') }}', function(data) {
-            var options = '';
+            var options = '<option value="">Selecione o Colaborador</option>';
             $.each(data, function(index, employee) {
                 options += '<option value="' + employee.id + '">' + employee.name +
                     '</option>';

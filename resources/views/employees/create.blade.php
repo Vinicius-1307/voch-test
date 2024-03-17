@@ -69,7 +69,7 @@
 
         $(document).ready(function() {
             $.get('{{ route('get.positions') }}', function(data) {
-                var options = '';
+                var options = '<option value="">Selecione o Cargo</option>';
                 $.each(data, function(index, position) {
                     options += '<option value="' + position.id + '">' + position.position +
                         '</option>';
@@ -78,7 +78,7 @@
             });
 
             $.get('{{ route('get.units') }}', function(data) {
-                var options = '';
+                var options = '<option value="">Selecione a Unidade</option>';
                 $.each(data, function(index, unit) {
                     options += '<option value="' + unit.id + '">' + unit.fantasy_name +
                         '</option>';
