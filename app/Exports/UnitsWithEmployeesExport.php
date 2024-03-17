@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Units;
+use App\Models\Unit;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -14,7 +14,9 @@ class UnitsWithEmployeesExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $units = Unit::withCount('employees')->get();
+        $units = Unit::withCount('employees')
+            ->orderBy('fantasy_name')
+            ->get();
 
         $unitData = [];
 

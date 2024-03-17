@@ -84,7 +84,9 @@ class EmployeeController extends Controller
     public function getAllByUnit()
     {
         try {
-            $units = Unit::withCount('employees')->get();
+            $units = Unit::withCount('employees')
+                ->orderBy('fantasy_name')
+                ->get();
             return view('tables.byUnit', compact('units'));
         } catch (Exception $err) {
             return response()->json($err->getMessage(), 500);
