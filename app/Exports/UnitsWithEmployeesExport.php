@@ -14,7 +14,7 @@ class UnitsWithEmployeesExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $units = Units::withCount('employees')->get();
+        $units = Unit::withCount('employees')->get();
 
         $unitData = [];
 

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Units;
+use App\Models\Unit;
 use Illuminate\Database\Seeder;
 
 class UnitsSeeder extends Seeder
@@ -14,6 +14,6 @@ class UnitsSeeder extends Seeder
      */
     public function run()
     {
-        Units::factory()->count(100)->create();
+        Unit::factory()->count(100)->create();
     }
 }

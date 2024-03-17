@@ -10,7 +10,7 @@ use App\Http\Requests\Employee\CreateEmployeeRequest;
 use App\Http\Requests\Employee\UpdatePerformanceRequest;
 use App\Models\Employee;
 use App\Models\EmployeePosition;
-use App\Models\Units;
+use App\Models\Unit;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
@@ -64,7 +64,7 @@ class EmployeeController extends Controller
 
     public function getAllByUnit()
     {
-        $units = Units::withCount('employees')->get();
+        $units = Unit::withCount('employees')->get();
         return view('tables.byUnit', compact('units'));
     }
 

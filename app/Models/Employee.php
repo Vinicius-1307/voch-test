@@ -45,6 +45,6 @@ class Employee extends Model
 
     public function unit()
     {
-        return $this->belongsTo(Units::class, 'units_id');
+        return $this->belongsTo(Unit::class, 'units_id');
     }
 }

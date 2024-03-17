@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\EmployeePosition;
-use App\Models\Units;
+use App\Models\Unit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EmployeesFactory extends Factory
@@ -15,7 +15,7 @@ class EmployeesFactory extends Factory
      */
     public function definition()
     {
-        $unitId = Units::pluck('id')->random();
+        $unitId = Unit::pluck('id')->random();
 
         return [
             'units_id' => $unitId,
