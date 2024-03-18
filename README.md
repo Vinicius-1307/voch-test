@@ -4,7 +4,7 @@ Bem-vindo. Esse sistema foi feito para fim de avaliação a pedido da empresa Vo
 
 **Requisitos:**
 
-```PHP 8.0 ou superior```
+```PHP 8.2 ou superior```
 
 **Configuração:**
 
