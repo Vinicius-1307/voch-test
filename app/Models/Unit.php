@@ -17,6 +17,12 @@ class Unit extends Model
 
     public function createUnit(array $data):bool
     {
+        $existingUnit = $this->where('cnpj', $data['cnpj'])
+            ->first();
+
+        if ($existingUnit) {
+            return false;
+        }
         $this->fantasy_name = $data['fantasy_name'];
         $this->company_name = $data['company_name'];
         $this->cnpj = $data['cnpj'];
