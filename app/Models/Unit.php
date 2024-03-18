@@ -17,6 +17,9 @@ class Unit extends Model
 
     public function createUnit(array $data):bool
     {
+        $this->fantasy_name = $data['fantasy_name'];
+        $this->company_name = $data['company_name'];
+        $this->cnpj = $data['cnpj'];
         $unit = $this->save($data);
         return $unit ? true : false;
     }
