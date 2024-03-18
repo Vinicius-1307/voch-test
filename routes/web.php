@@ -50,17 +50,10 @@ Route::controller(EmployeeController::class)
             return view('employees.evaluation');
         })->name('employee.evaluation');
 
-        Route::get('/allEmployeesReport', function () {
-            return view('employees.allEmployeesReport');
-        })->name('employee.allEmployeesReport');
+        Route::get('/allEmployeesReport', 'getAll')->name('employee.allEmployeesReport');
+        Route::get('/byUnitsReport', 'getAllByUnit')->name('employee.byUnitsReport');
+        Route::get('/byNotesReport', 'topPerformers')->name('employee.byNotesReport');
 
-        Route::get('/byNotesReport', function () {
-            return view('employees.byNotesReport');
-        })->name('employee.byNotesReport');
-
-        Route::get('/byUnitsReport', function () {
-            return view('employees.byUnitsReport');
-        })->name('employee.byUnitsReport');
         //Routes for excel export
         Route::get('/export-excel/by-performance', 'exportEmployeesNotes')->name('export_employees_note.excel');
         Route::get('/export-excel/all-employees', 'exportAllEmployees')->name('export_all_employees.excel');

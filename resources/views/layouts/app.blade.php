@@ -114,6 +114,11 @@
             transition: all 0.3s ease-in-out;
         }
 
+        #pagination {
+            display: flex;
+            margin: 20px;
+            justify-content: end;
+        }
 
         @keyframes scroll_sidebar {
             0% {

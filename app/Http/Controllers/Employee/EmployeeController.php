@@ -64,17 +64,19 @@ class EmployeeController extends Controller
             $employees = EmployeePosition::with(['employee.unit', 'position'])
                 ->join('employees', 'employees.id', '=', 'employee_positions.employee_id')
                 ->orderBy('employees.name')
-                ->get()
-                ->map(function ($employeePosition) {
-                    return [
-                        'Nome' => $employeePosition->employee->name,
-                        'CPF' => $employeePosition->employee->cpf,
-                        'Email' => $employeePosition->employee->email,
-                        'Unidade' => $employeePosition->employee->unit->fantasy_name,
-                        'Cargo' => $employeePosition->position->position,
-                    ];
-                });
-            return view('tables.allEmployees')->with('employees', $employees);
+                ->simplePaginate(10);
+
+            $employees->getCollection()->transform(function ($employeePosition) {
+                return [
+                    'Nome' => $employeePosition->employee->name,
+                    'CPF' => $employeePosition->employee->cpf,
+                    'Email' => $employeePosition->employee->email,
+                    'Unidade' => $employeePosition->employee->unit->fantasy_name,
+                    'Cargo' => $employeePosition->position->position,
+                ];
+            });
+
+            return view('employees.allEmployeesReport')->with('employees', $employees);
         } catch (Exception $err) {
             return response()->json($err->getMessage(), 500);
         }
@@ -85,8 +87,8 @@ class EmployeeController extends Controller
         try {
             $units = Unit::withCount('employees')
                 ->orderBy('fantasy_name')
-                ->get();
-            return view('tables.byUnit', compact('units'));
+                ->simplePaginate(10);
+            return view('employees.byUnitsReport')->with('units', $units);
         } catch (Exception $err) {
             return response()->json($err->getMessage(), 500);
         }
@@ -97,9 +99,9 @@ class EmployeeController extends Controller
         try {
             $topPerformers = EmployeePosition::orderBy('performance_note', 'desc')
                 ->with(['employee.unit', 'position'])
-                ->get();
+                ->simplePaginate(10);
 
-            $formattedTopPerformers = $topPerformers->map(function ($employeePosition) {
+            $topPerformers->getCollection()->transform(function ($employeePosition) {
                 return [
                     'Nome' => $employeePosition->employee->name,
                     'CPF' => $employeePosition->employee->cpf,
@@ -110,7 +112,7 @@ class EmployeeController extends Controller
                 ];
             });
 
-            return view('tables.topPerformers')->with('employees', $formattedTopPerformers);
+            return view('employees.byNotesReport')->with('employees', $topPerformers);
         } catch (Exception $err) {
             return response()->json($err->getMessage(), 500);
         }
