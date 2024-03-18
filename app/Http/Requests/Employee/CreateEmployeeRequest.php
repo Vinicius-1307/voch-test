@@ -37,7 +37,7 @@ class CreateEmployeeRequest extends FormRequest
             ],
             'cpf' => [
                 'required',
-                'unique:employees,cpf'
+                'string'
             ],
             'email' => [
                 'required',

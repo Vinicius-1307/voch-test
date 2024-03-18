@@ -36,7 +36,7 @@ class CreateUnitRequest extends FormRequest
             ],
             'cnpj' => [
                 'required',
-                'unique:units,cnpj'
+                'string'
             ],
         ];
     }
