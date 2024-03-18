@@ -18,7 +18,7 @@ Antes de começar a usar o sistema, siga as etapas a seguir para configurar o am
 
 2.	Instalar dependências:	
     ```bash
-        composer install
+    composer install
     ```
 
 3.	Configurar Variáveis de Ambiente:
@@ -30,25 +30,25 @@ Copie o arquivo ```.env.example``` para ```.env``` e configure as seguintes vari
 
 5.	Execute o seguinte comando para gerar uma Chave de Aplicativo: </br>
        ```bash
-        php artisan key:generate
+    php artisan key:generate
        ```
 
 6.	Para criar as tabelas do banco de dados execute o seguinte comando:
 
      ```bash
-        php artisan migrate
+    php artisan migrate
        ```
       
 8. Para popular o banco de dados, execute o seguinte comando:
    
       ```bash
-          php artisan db:seed
+    php artisan db:seed
       ```
 
 10.	Iniciar o servidor de desenvolvimento:
 
      ```bash
-        php artisan serve
+    php artisan serve
        ```
 
 <br>
